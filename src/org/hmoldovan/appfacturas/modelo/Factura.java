@@ -1,5 +1,6 @@
 package org.hmoldovan.appfacturas.modelo;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Factura {
@@ -59,5 +60,57 @@ public class Factura {
         if(indiceItems < MAX_ITEMS) {
             this.items[indiceItems++] = item;
         }
+    }
+
+    public float calcularTotal(){
+        float total=0.0f;
+        for(ItemFactura item:this.items){
+            if(item == null){
+                continue; //con esto nos evistamos la suma (para el max de 12) en caso de ser item=null
+            }
+            total += item.calcularImporte();
+        }
+        return  total;
+    }
+
+    public String generarDetalle(){
+        StringBuilder sb=new StringBuilder("Factura Nº: "  );
+        sb.append(folio)
+                .append("\nCliente: ")
+                .append(this.cliente.getNombre())
+                .append("\t NIF: ")
+                .append(cliente.getNif())
+                .append("\nDescripción: ")
+                .append(this.descripcion)
+                .append("\n");
+
+
+        SimpleDateFormat df=new SimpleDateFormat("dd 'de' MMMM, yyyy");
+        sb.append("Fecha Emisión: ")
+                .append(df.format(this.fecha))
+                .append("\n")
+                .append("\n#\tNombre\t$\tCant.\tTotal\n");
+
+        for(ItemFactura item:this.items){
+
+            if(item==null){
+                continue;
+            }
+            sb.append(item.getProducto().getCodigo())
+                    .append("\t")
+                    .append(item.getProducto().getNombre())
+                    .append("\t")
+                    .append(item.getProducto().getPrecio())
+                    .append("\t")
+                    .append(item.getCantidad())
+                    .append("\t")
+                    .append(item.calcularImporte())
+                    .append("\t");
+        }
+        sb.append("\nGrand Total: ")
+                .append(calcularTotal())
+                .append("\t");
+
+        return sb.toString();
     }
 }
