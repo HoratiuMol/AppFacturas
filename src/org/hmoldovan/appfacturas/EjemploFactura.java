@@ -27,7 +27,7 @@ public class EjemploFactura {
 
         System.out.println();
 
-        for(int i=0;i<5;i++){
+        for(int i=0;i<2;i++){
             producto = new Producto();
             System.out.print("Ingrese producto nº " + producto.getCodigo() + ": ");
             nombre=s.next();

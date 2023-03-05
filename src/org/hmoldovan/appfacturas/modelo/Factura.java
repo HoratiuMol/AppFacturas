@@ -64,7 +64,8 @@ public class Factura {
 
     public float calcularTotal(){
         float total=0.0f;
-        for(ItemFactura item:this.items){
+        for(int i=0; i< indiceItems; i++){
+            ItemFactura item=this.items[i];
             if(item == null){
                 continue; //con esto nos evistamos la suma (para el max de 12) en caso de ser item=null
             }
